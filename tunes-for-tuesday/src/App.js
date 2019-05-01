@@ -4,6 +4,7 @@ import './App.css';
 import Login from './components/Login';
 import Voting from './components/voting';
 import io from "socket.io-client";
+import {SEND_VOTES} from './events'
 
 const socketUrl = "http://localhost:3231"
 
@@ -38,8 +39,11 @@ initSocket = () => {
       () => {console.log(this.state)}
     )}
 
-  submit = () =>{
+  submit = (data) =>{
+    const {socket} = this.state
     this.setState({submitted:true})
+    console.log(data)
+    socket.emit(SEND_VOTES, data)
   }
 
   conditonalRedering = () =>{

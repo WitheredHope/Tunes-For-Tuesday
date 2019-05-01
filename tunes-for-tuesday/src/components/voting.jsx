@@ -32,21 +32,13 @@ class Voting extends Component {
     }
 
     handleSubmit = event =>{
-        /*
-        hopefully construct an object like 
-        {
-            user:"",
-            votes:[
-                {
-                    songid:"",
-                    score:""
-                }
-            ]
+        event.preventDefault()
+        const {votes, user} = this.state
+        const data = {
+            user:user,
+            votes:votes
         }
-        */
-       event.preventDefault()
-       console.log(this.state.votes)
-       this.props.submit()
+        this.props.submit(data)
     }
 
     render() {
