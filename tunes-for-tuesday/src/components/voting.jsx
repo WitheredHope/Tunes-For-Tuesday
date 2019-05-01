@@ -4,13 +4,49 @@ class Voting extends Component {
         super(props);
         this.state = {
             request:{},
-            user:null
+            user:null,
+            votes:[]
         }
     }
 
     componentWillMount () {
-        const myRequest= require("./request2")
-        this.setState({request:myRequest,user:this.props.user})
+        const myRequest= require("../request2")
+        this.setState({request:myRequest,user:this.props.user}, () => {
+            console.log(this.state)
+        })
+    }
+
+    handleChange = event =>{
+        const songid = event.target.name
+        const score = event.target.value
+        const index = "index"
+        console.log(songid)
+        console.log(score)
+        const votes = this.state.votes.filter((item) => item.songid !== songid)
+        votes.push({songid:songid, score:score})
+        this.setState({ votes:votes})
+        //console.log(this.state.votes.votes)
+        //console.log(this.state.votes.votes[0])
+        //this.setState({ votes: [...this.state.votes, {songid:songid, score:score}]}, console.log(this.state.votes)) //simple value
+        
+    }
+
+    handleSubmit = event =>{
+        /*
+        hopefully construct an object like 
+        {
+            user:"",
+            votes:[
+                {
+                    songid:"",
+                    score:""
+                }
+            ]
+        }
+        */
+       event.preventDefault()
+       console.log(this.state.votes)
+       this.props.submit()
     }
 
     render() {
@@ -19,19 +55,22 @@ class Voting extends Component {
         if(members.indexOf(this.state.user) > -1){ 
         return (
             <div>
-                {this.state.request.items.map(array =>{
+                {this.state.request.items.map((array) =>{
                     if(array.added_by.id!==this.state.user){
                         return(
-                        <form className="songVoting" key={array.track.id}>
+                        <form className="songVoting" key={array.track.id} >
                             <h4>{array.track.name}</h4>
-                            <input type="radio" name={array.track.id}/>
-                            <input type="radio" name={array.track.id}/>
-                            <input type="radio" name={array.track.id}/>
-                            <input type="radio" name={array.track.id}/>
-                            <input type="radio" name={array.track.id}/>
+                            <div onChange={this.handleChange}>
+                                <input type="radio" name={array.track.id} value={1}/>
+                                <input type="radio" name={array.track.id} value={2}/>
+                                <input type="radio" name={array.track.id} value={3}/>
+                                <input type="radio" name={array.track.id} value={4}/>
+                                <input type="radio" name={array.track.id} value={5}/>    
+                            </div>
                         </form>
                     )}else{return(null)}
                 })}
+                <button type="submit" value="Submit" onClick={this.handleSubmit}>Submit :)</button>
             </div>
 
             /*

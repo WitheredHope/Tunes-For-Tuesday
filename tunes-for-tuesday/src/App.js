@@ -3,33 +3,61 @@ import React, { Component } from 'react';
 import './App.css';
 import Login from './components/Login';
 import Voting from './components/voting';
+import io from "socket.io-client";
+
+const socketUrl = "http://localhost:3231"
+
+
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      socket:null,
       user:null,
-      loggedin: false
+      loggedin: false,
+      submitted:false      
      }
 }
+
+
+componentWillMount() {
+  this.initSocket();
+}
+
+initSocket = () => {
+  const socket = io(socketUrl);
+  socket.on("connect", () => {
+    console.log("Connected");
+  });
+  this.setState({ socket });
+};
 
   logIn = (user) =>{
     this.setState({user:user, loggedin:true},
       () => {console.log(this.state)}
     )}
 
+  submit = () =>{
+    this.setState({submitted:true})
+  }
+
   conditonalRedering = () =>{
-    const {loggedin, user} = this.state
+    const {loggedin, submitted, user} = this.state
     if(!loggedin){
       return(
         <Login user={user} logIn={this.logIn}/>
       )
-    }if(loggedin){
+    }if(loggedin & !submitted){
       return(
         <div>
           <h1>{"Logged in as: " + user}</h1>
-          <Voting user={user}/>
+          <Voting user={user} submit={this.submit}/>
         </div>
+      )
+    }else{
+      return(
+        <h1>Big Happy</h1>
       )
     }
   }
