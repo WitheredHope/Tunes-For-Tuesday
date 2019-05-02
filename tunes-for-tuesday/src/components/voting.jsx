@@ -19,17 +19,10 @@ class Voting extends Component {
     handleChange = event =>{
         const songid = event.target.name
         const score = event.target.value
-        const index = "index"
-        console.log(songid)
-        console.log(score)
         const votes = this.state.votes.filter((item) => item.songid !== songid)
         votes.push({songid:songid, score:score})
         this.setState({ votes:votes})
-        //console.log(this.state.votes.votes)
-        //console.log(this.state.votes.votes[0])
-        //this.setState({ votes: [...this.state.votes, {songid:songid, score:score}]}, console.log(this.state.votes)) //simple value
-        
-    }
+        }
 
     handleSubmit = event =>{
         event.preventDefault()
