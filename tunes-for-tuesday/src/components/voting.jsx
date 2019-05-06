@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+const myRequest= require("../request2")
+
 class Voting extends Component {
     constructor(props) {
         super(props);
@@ -10,7 +12,6 @@ class Voting extends Component {
     }
 
     componentWillMount () {
-        const myRequest= require("../request2")
         this.setState({request:myRequest,user:this.props.user}, () => {
             console.log(this.state)
         })

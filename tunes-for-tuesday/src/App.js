@@ -5,6 +5,9 @@ import Login from './components/Login';
 import Voting from './components/voting';
 import io from "socket.io-client";
 import {SEND_VOTES} from './events'
+import SpotifyLogin from './components/SpotifyLogin';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 
 const socketUrl = "http://localhost:3231"
 
@@ -46,11 +49,12 @@ initSocket = () => {
     socket.emit(SEND_VOTES, data)
   }
 
-  conditonalRedering = () =>{
+  homeRedering = () =>{
     const {loggedin, submitted, user} = this.state
     if(!loggedin){
       return(
-        <Login user={user} logIn={this.logIn}/>
+        //<Login user={user} logIn={this.logIn}/>
+        <SpotifyLogin/>
       )
     }if(loggedin & !submitted){
       return(
@@ -68,10 +72,12 @@ initSocket = () => {
 
   render() {
     return (
+      <Router>
       <div>
         <header> Tunes For Tuesday</header>
-        {this.conditonalRedering()}
+        {this.homeRedering()}
       </div>
+      </Router>
     );
   }
 }
