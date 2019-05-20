@@ -1,32 +1,40 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 //import logo from './logo.svg';
 import './App.css';
-import Login from './components/Login';
-import Voting from './components/voting';
+import SpotifyLogin from './components/SpoifyLogin'
+//import Voting from './components/voting'
+import Success from './components/Success'
 import io from "socket.io-client";
 import {SEND_VOTES} from './events'
-import SpotifyLogin from './components/SpotifyLogin';
 import { BrowserRouter as Router, Route } from "react-router-dom";
-
-
+import CurrentlyPlaying from './components/CurrentlyPlaying';
+var Spotify = require('spotify-web-api-js');
+var spot = new Spotify();
+const {urls} = require('./vars')
 const socketUrl = "http://localhost:3231"
-
-
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       socket:null,
-      user:null,
+      token:null, 
+      name:null,
       loggedin: false,
-      submitted:false      
+      submitted:false,
+      response:null      
      }
 }
 
-
 componentWillMount() {
-  this.initSocket();
+  //this.initSocket();
+}
+
+getUser = (token) =>{
+  spot.getMyTopArtists("", (error, response) =>{
+    console.log(error)
+    console.log(response)
+  })
 }
 
 initSocket = () => {
@@ -37,8 +45,8 @@ initSocket = () => {
   this.setState({ socket });
 };
 
-  logIn = (user) =>{
-    this.setState({user:user, loggedin:true},
+  logIn = (token) =>{
+    this.setState({token:token, loggedin:true},
       () => {console.log(this.state)}
     )}
 
@@ -50,17 +58,19 @@ initSocket = () => {
   }
 
   homeRedering = () =>{
-    const {loggedin, submitted, user} = this.state
+    const {loggedin, submitted, token} = this.state
     if(!loggedin){
+      console.log(urls.main + urls.redirect)
       return(
         //<Login user={user} logIn={this.logIn}/>
-        <SpotifyLogin/>
+        <SpotifyLogin logIn={this.logIn}/>
       )
     }if(loggedin & !submitted){
       return(
         <div>
-          <h1>{"Logged in as: " + user}</h1>
-          <Voting user={user} submit={this.submit}/>
+          <h1>{"Logged in"}</h1>
+          {/*<Voting token={token} submit={this.submit}/>*/}
+          <CurrentlyPlaying token={token}/>
         </div>
       )
     }else{
@@ -73,11 +83,12 @@ initSocket = () => {
   render() {
     return (
       <Router>
-      <div>
-        <header> Tunes For Tuesday</header>
-        {this.homeRedering()}
-      </div>
-      </Router>
+        <Route path="/callback" component={Success}/>
+        <div>
+          <header> Tunes For Tuesday</header>
+          {this.homeRedering()}
+        </div>
+        </Router>
     );
   }
 }

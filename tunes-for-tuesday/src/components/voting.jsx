@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-const myRequest= require("../request2")
+const myRequest = require("../request2")
 
 class Voting extends Component {
     constructor(props) {
