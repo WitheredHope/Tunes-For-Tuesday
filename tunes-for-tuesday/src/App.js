@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-//import logo from './logo.svg';
 import './App.css';
 import SpotifyLogin from './components/SpoifyLogin'
 import Voting from './components/voting'
@@ -7,14 +6,12 @@ import Success from './components/Success'
 import io from "socket.io-client";
 import {SEND_VOTES} from './events'
 import { BrowserRouter as Router, Route } from "react-router-dom";
-import CurrentlyPlaying from './components/CurrentlyPlaying';
-import Home from './components/Splash';
+import { Redirect } from "react-router-dom";
 import Splash from './components/Splash';
 import Adding from './components/Adding';
 import Navbar from './components/Navbar';
 var Spotify = require('spotify-web-api-js');
 var spot = new Spotify();
-const {urls} = require('./configs/vars')
 const socketUrl = "http://localhost:3231"
 
 class App extends Component {
@@ -93,7 +90,7 @@ initSocket = () => {
           <Route path="/" exact component={Splash}/>
           <Route path="/voting" render={()=><Voting token={this.state.token}/>}/>
           <Route path="/adding" component={Adding}/>        
-          <Route path="/callback" component={Success}/>
+          <Route path="/callback" render={()=>(<Redirect to="/"/>)}/>
         </div>
       </Router>
     );
