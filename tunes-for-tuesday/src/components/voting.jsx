@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-
+import "./voting.css"
 const spotifyapi = require('../spotifyapi')
-let myRequest = {}
 
 
 class Voting extends Component {
@@ -59,11 +58,11 @@ class Voting extends Component {
                         <form className="songVoting" key={array.track.id} >
                             <h4>{array.track.name}</h4>
                             <div onChange={this.handleChange}>
-                                <input type="radio" name={array.track.id} value={1}/>
-                                <input type="radio" name={array.track.id} value={2}/>
-                                <input type="radio" name={array.track.id} value={3}/>
-                                <input type="radio" name={array.track.id} value={4}/>
-                                <input type="radio" name={array.track.id} value={5}/>    
+                                <input type="radio" name={array.track.id} value={1} class="one"/>
+                                <input type="radio" name={array.track.id} value={2} class="two"/>
+                                <input type="radio" name={array.track.id} value={3} class="three"/>
+                                <input type="radio" name={array.track.id} value={4} class="four"/>
+                                <input type="radio" name={array.track.id} value={5} class="five"/>    
                             </div>
                         </form>
                     )}else{return(null)}
@@ -88,7 +87,7 @@ class Voting extends Component {
             */
          )}else{
              return(
-                 <p>Either; I fucked up, you fucked up, or you haven't added a song to the playlist</p>
+                 <p>Something went wrong</p>
              )
          };
     }

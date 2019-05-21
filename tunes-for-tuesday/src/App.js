@@ -8,6 +8,10 @@ import io from "socket.io-client";
 import {SEND_VOTES} from './events'
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import CurrentlyPlaying from './components/CurrentlyPlaying';
+import Home from './components/Splash';
+import Splash from './components/Splash';
+import Adding from './components/Adding';
+import Navbar from './components/Navbar';
 var Spotify = require('spotify-web-api-js');
 var spot = new Spotify();
 const {urls} = require('./configs/vars')
@@ -27,7 +31,7 @@ class App extends Component {
 }
 
 componentWillMount() {
-  //this.initSocket();
+  this.initSocket();
 }
 
 getUser = (token) =>{
@@ -61,13 +65,11 @@ initSocket = () => {
     const {loggedin, submitted, token} = this.state
     if(!loggedin){
       return(
-        //<Login user={user} logIn={this.logIn}/>
-        <SpotifyLogin logIn={this.logIn}/>
+        <h1></h1>
       )
     }if(loggedin & !submitted){
       return(
         <div>
-          <h1>{"Logged in"}</h1>
           <Voting token={token} submit={this.submit}/>
           {/*<CurrentlyPlaying token={token}/>*/}
         </div>
@@ -82,12 +84,18 @@ initSocket = () => {
   render() {
     return (
       <Router>
-        <Route path="/callback" component={Success}/>
         <div>
-          <header> Tunes For Tuesday</header>
-          {this.homeRedering()}
+          <header> 
+            <h1>Tunes For Tuesday</h1>
+            <Navbar/>
+            <SpotifyLogin logIn={this.logIn}/>
+          </header>
+          <Route path="/" exact component={Splash}/>
+          <Route path="/voting" render={()=><Voting token={this.state.token}/>}/>
+          <Route path="/adding" component={Adding}/>        
+          <Route path="/callback" component={Success}/>
         </div>
-        </Router>
+      </Router>
     );
   }
 }

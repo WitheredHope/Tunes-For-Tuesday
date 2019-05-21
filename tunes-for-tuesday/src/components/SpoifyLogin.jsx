@@ -20,18 +20,16 @@ class SpotifyLogin extends Component {
     }
 
     render() { 
+      if(!this.state.token){
         return ( 
             <div>
-                <a
-              href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join(
-                "%20"
-              )}&response_type=token&show_dialog=true`}
-            >
-              Login to Spotify
-            </a>
-            
+              <a href={`${authEndpoint}?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&response_type=token&show_dialog=true`}> 
+              <b>Login to Spotify</b>
+              </a>
             </div>
-         );
+         )}else{
+           return( null )
+         };
     }
 }
  
