@@ -1,19 +1,31 @@
 import React, { Component } from 'react';
-const myRequest = require("../request2")
+
+const spotifyapi = require('../spotifyapi')
+let myRequest = {}
+
 
 class Voting extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            request:{},
-            user:null,
+            request:{
+                items:[]
+            },
+            user:{id:null},
             votes:[]
         }
     }
 
-    componentWillMount () {
-        this.setState({request:myRequest,user:this.props.user}, () => {
-            console.log(this.state)
+    componentDidMount () {
+        const playlistID = "2BWj9AqpRSQQkjg0E5ZVyx"
+        spotifyapi.getPlaylistTracks(this.props.token, playlistID, (data) =>{
+            this.setState ({request: data}, () => {
+            })
+        })
+        spotifyapi.getUser(this.props.token, (data) => {
+            this.setState({user: data}, () =>{
+                console.log(this.state)
+            })
         })
     }
 
@@ -29,7 +41,7 @@ class Voting extends Component {
         event.preventDefault()
         const {votes, user} = this.state
         const data = {
-            user:user,
+            user:user.id,
             votes:votes
         }
         this.props.submit(data)
@@ -38,11 +50,11 @@ class Voting extends Component {
     render() {
         const members=this.state.request.items.map(array=>{return(array.added_by.id)})
         console.log(members)
-        if(members.indexOf(this.state.user) > -1){ 
+        if(members.indexOf(this.state.user.id) > -1){ 
         return (
             <div>
                 {this.state.request.items.map((array) =>{
-                    if(array.added_by.id!==this.state.user){
+                    if(array.added_by.id!==this.state.user.id){
                         return(
                         <form className="songVoting" key={array.track.id} >
                             <h4>{array.track.name}</h4>

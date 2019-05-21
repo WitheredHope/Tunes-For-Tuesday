@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { authEndpoint, clientId, redirectUri, scopes } from "../config";
+import { authEndpoint, clientId, redirectUri, scopes } from "../configs/config";
 import hash from "../hash";
 
 class SpotifyLogin extends Component {

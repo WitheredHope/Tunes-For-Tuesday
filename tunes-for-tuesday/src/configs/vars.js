@@ -1,3 +1,4 @@
+//http://34.74.17.224:3000
 module.exports = {
     urls:{
         main:"http://localhost:3000",
