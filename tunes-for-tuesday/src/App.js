@@ -89,7 +89,7 @@ initSocket = () => {
           </header>
           <Route path="/" exact component={Splash}/>
           <Route path="/voting" render={()=><Voting token={this.state.token}/>}/>
-          <Route path="/adding" component={Adding}/>        
+          <Route path="/adding" render={()=><Adding token={this.state.token}/>}/>        
           <Route path="/callback" render={()=>(<Redirect to="/"/>)}/>
         </div>
       </Router>

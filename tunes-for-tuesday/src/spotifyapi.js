@@ -39,6 +39,21 @@ module.exports = {
           callback(data)
         }
       })
+    },
+    search:(token, input, callback) =>{
+      //GET https://api.spotify.com/v1/search
+      //var replaced = input.split(' ').join('%20')
+      //console.log(replaced)
+      $.ajax({
+        url: "https://api.spotify.com/v1/search?q=" + input + "&type=track",
+        type: "GET",
+        beforeSend: (xhr) => {
+          xhr.setRequestHeader("Authorization", "Bearer " + token);
+        },
+        success: (data) => {
+          callback(data)
+        }
+      })
     }
     /*template:(token, callback) =>{
       $.ajax({
