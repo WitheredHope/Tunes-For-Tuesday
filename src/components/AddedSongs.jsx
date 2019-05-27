@@ -14,12 +14,12 @@ class AddedSongs extends Component {
                 {console.log(this.props.songs.id)}
                 {this.props.songs.map((array) =>{
                     return(
-                        <li key={array.uri}>
-                            {array.songName} 
-                            {array.artistName} 
-                            {array.albumName} 
-                            <img src={array.albumArt} alt="No Album Art" height="42" width="42"/> 
-                        </li>
+                        <div key={array.uri}>
+                            <img src={array.albumArt} alt="No Album Art" height="60" width="60"/> <br/>
+                            {array.songName} <br/>
+                            {array.artistName} <br/>
+                            {array.albumName} <br/>
+                        </div>
                     )
                 })}
             </ul>
