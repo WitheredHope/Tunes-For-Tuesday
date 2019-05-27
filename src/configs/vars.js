@@ -1,7 +1,6 @@
-//http://34.74.17.224:3000
 module.exports = {
     urls:{
-        main:"http://localhost:3000",
+        main:"https://tft.jpdk.me",
         redirect:"/callback",
         auth:"/api/auth/spotify"
     },
