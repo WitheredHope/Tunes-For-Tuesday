@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-const spotifyapi = require('../spotifyapi')
+const spotifyapi = require('../../spotifyapi')
 
 class CurrentlyPlaying extends Component {
     constructor(props) {

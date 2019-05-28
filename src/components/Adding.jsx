@@ -22,6 +22,7 @@ class Adding extends Component {
         return (
             <div> 
                 <h1>Adding Songs is not yet implemented</h1>
+                <h3>{this.props.token}</h3>
                 <Search token={this.props.token} addSong={this.addSong}/>
                 <AddedSongs songs={this.state.addedSongs}/>
             </div>
