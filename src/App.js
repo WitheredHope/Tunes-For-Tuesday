@@ -8,15 +8,16 @@ import { Redirect } from "react-router-dom";
 import Splash from './components/Splash';
 import Adding from './components/Adding';
 import Navbar from './components/Navbar';
-// Firebase App (the core Firebase SDK) is always required and
-// must be listed before other Firebase SDKs
-import * as firebase from "firebase/app";
 
-// Add the Firebase services that you want to use
-import "firebase/auth";
-import "firebase/firestore";
+const { Client } = require('pg')
+const client = new Client()
 
-const firebaseConfig = require('./configs/vars')
+client.connect()
+
+client.query('SELECT $1::text as message', ['Hello world!'], (err, res) => {
+  console.log(err ? err.stack : res.rows[0].message) // Hello World!
+  client.end()
+})
 
 
 class App extends Component {
@@ -30,10 +31,6 @@ class App extends Component {
       submitted:false,
       response:null      
      }
-}
-
-componentWillMount() {
-  firebase.initializeApp(firebaseConfig);
 }
 
   logIn = (token) =>{
